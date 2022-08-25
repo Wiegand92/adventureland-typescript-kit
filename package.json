@@ -1,0 +1,27 @@
+{
+  "name": "y",
+  "version": "0.0.1",
+  "description": "A typescript starter for Adventure Land code",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup --config rollup.config.ts --configPlugin typescript",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rollup",
+    "adventureland",
+    "typescript"
+  ],
+  "author": "Alex Wiegand",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.4",
+    "dotenv": "^16.0.1",
+    "rollup": "^2.78.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
+  }
+}
