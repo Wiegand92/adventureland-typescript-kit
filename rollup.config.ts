@@ -4,6 +4,7 @@ import resolve from '@rollup/plugin-node-resolve';
 //requiring path and fs modules
 import * as path from 'node:path'
 import * as fs from 'node:fs/promises'
+import alUploader from './rollup-plugin-al-uploader';
 
 interface SaveSlot {
   name: string;
@@ -57,7 +58,8 @@ export default (async () => {
       input: save,
       output: {
         format: 'cjs',
-        file: `build/${saveMap[save].name}.js`
+        file: `build/${saveMap[save].name}.js`,
+        plugins: [alUploader()]
       },
       plugins: [
         typescript(),
