@@ -7,8 +7,13 @@ import * as fs from 'node:fs/promises'
 import alUploader from './rollup-plugin-al-uploader';
 
 interface SaveSlot {
-  name: string;
-  slot: number;
+  name?: string;
+  slot?: number;
+  message?: string
+}
+
+interface SaveMap {
+  [fileName: string]: SaveSlot
 }
 
 //joining path of directory 
@@ -16,13 +21,10 @@ const directoryPath = path.join(__dirname, 'src/uploads');
 
 
 async function getUploadFiles() {
-  const saveMap: { [filename: string]: SaveSlot } = {}
+  const saveMap: SaveMap = {}
   try {
     // Get a list of files in the uploads directory //
     const files = await fs.readdir(directoryPath)
-
-    // Sort directory in case slots are not defined //
-    files.sort();
 
     // Files should be saved in the format [saveName].[saveSlot].js //
     files.forEach((file, index) => {
@@ -34,15 +36,13 @@ async function getUploadFiles() {
         [saveName, saveSlot, ] = fileOptions
         // Convert saveSlot to Number //
         saveSlot = Number(saveSlot)
+        saveMap[`./src/uploads/${file}`] = {name: saveName, slot: saveSlot}
       } else {
-        // Destructure name from split string //
-        [saveName, ] = fileOptions
-        saveSlot = index + 1;
+        saveMap[`./src/uploads/${file}`] = {message: 'Please save your files in the format: [saveName].[saveSlot].ts'};
       }
-      saveMap[`./src/uploads/${file}`] = {name: saveName, slot: saveSlot}
     })
   } catch(err){
-    throw(err)
+    console.error(err)
   } finally {
     return saveMap
   }
@@ -54,19 +54,24 @@ export default (async () => {
   const saveMap = await getUploadFiles()
   const configs = []
   for (const save in saveMap) {
-    configs.push({
-      input: save,
-      output: {
-        format: 'cjs',
-        file: `build/${saveMap[save].name}.js`,
-        plugins: [alUploader()]
-      },
-      plugins: [
-        typescript(),
-        resolve(),
-        commonjs(),
-      ],
-    })
+    if (!saveMap[save].message) {
+      configs.push({
+        input: save,
+        output: {
+          format: 'cjs',
+          file: `build/${saveMap[save].name}.js`,
+        },
+        plugins: [
+          typescript(),
+          resolve(),
+          commonjs(),
+          alUploader()
+        ],
+      })
+    } else {
+      console.error(saveMap[save].message) 
+      console.error('Skipping: ' + save)
+    }
   }
   return configs
 })()

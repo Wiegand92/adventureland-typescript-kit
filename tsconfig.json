@@ -15,5 +15,6 @@
     "esModuleInterop": true,
     "downlevelIteration": true,
     "baseUrl": "./src",
-  }
+  },
+  "include": ["src/**/*", "rollup.config.ts"],
 }

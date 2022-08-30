@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
-    "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
+    "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch --no-watch.clearScreen",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -19,6 +19,7 @@
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.4",
+    "chokidar": "^3.5.3",
     "dotenv": "^16.0.1",
     "rollup": "^2.78.0",
     "rollup-plugin-terser": "^7.0.2",

@@ -3,15 +3,14 @@ import http, {ClientRequest} from 'node:http'
 require('dotenv').config();
 
 // Holds the code from the previous build, will check uniqueness to avoid extra uploads //
-let code: string;
-// A boolean to avoid uploading on the first call //
-let firstBuild = true;
+// Naive option, figure out how to check hash name //
+const codeMap: {[fileName: string]: string} = {};
+
 // Will hold the request object to avoid multiple api calls //
-let prevReq: ClientRequest;
+const reqMap: {[saveName: string]: ClientRequest} = {};
 
 
 function uploadFile(code: string, saveName: string, slot: number){
-    console.log(process.env.AUTH_COOKIE)
     const req = http.request(
         {
           hostname: "adventure.land",
@@ -24,9 +23,8 @@ function uploadFile(code: string, saveName: string, slot: number){
         },
         (res) => {
           res.on("data", (response) => {
-            console.log(response.toString())
             const asJson: {message: string}[] = JSON.parse(response.toString());
-            console.log(`${saveName}: ${asJson[0].message}`);
+            console.log(`${saveName}: ${asJson[2].message}`);
           });
         }
       );
@@ -34,11 +32,11 @@ function uploadFile(code: string, saveName: string, slot: number){
         console.error("Error talking to the AL API:", err);
       });
   
-      if (prevReq) {
+      if (reqMap[saveName]) {
         console.log("Aborted ongoing request..");
-        prevReq.destroy();
+        reqMap[saveName].destroy();
       }
-      prevReq = req
+      reqMap[saveName] = req;
   
       // yes, the API is kind of convoluted.
       // pack it into a JSON object, stringify it and then encode such that
@@ -61,34 +59,23 @@ export default function alUploader(){
     return {
         name: 'alUploader',
         generateBundle: (options: any, bundle: {[fileName: string]: any}) => {
-          // console.log(code === bundle[0].code)
           let saveName;
           let saveSlot;
           for (const [fileName, data] of Object.entries(bundle)){
-            const fileOptions = fileName.split('.')
-            
-            if (fileOptions.length === 3){
-              // Destructure name and slot from split string //
-              [saveName, saveSlot, ] = fileOptions
-              // Convert saveSlot to Number //
-              saveSlot = Number(saveSlot)
-            } else {
-              // Destructure name from split string //
-              [saveName, ] = fileOptions;
-              saveSlot = 3
-            }
-
+            // Original FileName is the last part of the facadeModuleId //
+            const fileOptions: string[] = data.facadeModuleId.split('/').pop().split('.');
+            // Destructure name and slot from split string //
+            [saveName, saveSlot, ] = fileOptions
+            // Convert saveSlot to Number //
+            saveSlot = Number(saveSlot)
             // Check if code has changed, and this is not the initial build //
               // If yes, upload code //
-            if(code !== data.code && !firstBuild){
+            console.log(codeMap[saveName] === data.code)
+            if(codeMap[saveName] && codeMap[saveName] !== data.code){
               uploadFile(data.code, saveName, saveSlot)
             }
-            code = data.code;
+            codeMap[saveName] = data.code;
           }
-          firstBuild = false;
-          // console.log('options: ', options,'bundle: ', bundle)
-          // code = bundle[0].code
-            // uploadFile(bundle['ranger.js'].code, 'ranger', 3)
         }
     }
 }
