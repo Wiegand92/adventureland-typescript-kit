@@ -1,3 +1,3 @@
-import testImport from "../ai/testModule";
+import testImport from '../ai/testModule';
 
 testImport('mage');

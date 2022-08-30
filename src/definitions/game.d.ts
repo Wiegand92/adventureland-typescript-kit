@@ -100,7 +100,11 @@ declare global {
   function heal(entity: Entity): void;
   function attack(entity: Entity): void;
   function loot(): void;
-  function upgrade(itemPos: number, scrollPos: number, offeringPos?: number): void;
+  function upgrade(
+    itemPos: number,
+    scrollPos: number,
+    offeringPos?: number,
+  ): void;
   function load_code(foo: string): void;
   function send_cm(to: string, data: any): void;
   function game_log(msg: string, color?: string): void;
@@ -115,11 +119,30 @@ declare global {
   function move(x: number, y: number): void;
   function xmove(x: number, y: number): void;
   function show_json(stuff: any): void;
-  function can_move(args: { map: string; x: number; y: number; going_x: number; going_y: number }): boolean;
+  function can_move(args: {
+    map: string;
+    x: number;
+    y: number;
+    going_x: number;
+    going_y: number;
+  }): boolean;
   function stop(what: string): void;
 
-  function draw_circle(x: number, y: number, radius: number, size?: number, color?: number): Drawing;
-  function draw_line(x: number, y: number, x2: number, y2: number, size?: number, color?: number): Drawing;
+  function draw_circle(
+    x: number,
+    y: number,
+    radius: number,
+    size?: number,
+    color?: number,
+  ): Drawing;
+  function draw_line(
+    x: number,
+    y: number,
+    x2: number,
+    y2: number,
+    size?: number,
+    color?: number,
+  ): Drawing;
 
   var handle_command: undefined | ((command: string, args: string) => void);
   var on_cm: undefined | ((from: string, data: any) => void);
@@ -129,61 +152,61 @@ declare global {
 }
 
 export type SkillName =
-  | "use_town"
-  | "move_right"
-  | "blink"
-  | "mluck"
-  | "gm"
-  | "darkblessing"
-  | "move_up"
-  | "supershot"
-  | "move_left"
-  | "interact"
-  | "phaseout"
-  | "revive"
-  | "stack"
-  | "charge"
-  | "partyheal"
-  | "3shot"
-  | "quickpunch"
-  | "rspeed"
-  | "taunt"
-  | "stomp"
-  | "stop"
-  | "shadowstrike"
-  | "pure_eval"
-  | "cburst"
-  | "hardshell"
-  | "use_mp"
-  | "burst"
-  | "toggle_inventory"
-  | "toggle_stats"
-  | "agitate"
-  | "poisonarrow"
-  | "warcry"
-  | "mcourage"
-  | "use_hp"
-  | "curse"
-  | "toggle_character"
-  | "travel"
-  | "5shot"
-  | "move_down"
-  | "esc"
-  | "toggle_run_code"
-  | "attack"
-  | "heal"
-  | "track"
-  | "absorb"
-  | "toggle_code"
-  | "open_snippet"
-  | "throw"
-  | "invis"
-  | "cleave"
-  | "energize"
-  | "light"
-  | "snippet"
-  | "4fingers"
-  | "quickstab"
-  | "magiport"
-  | "pcoat"
-  | "scare";
+  | 'use_town'
+  | 'move_right'
+  | 'blink'
+  | 'mluck'
+  | 'gm'
+  | 'darkblessing'
+  | 'move_up'
+  | 'supershot'
+  | 'move_left'
+  | 'interact'
+  | 'phaseout'
+  | 'revive'
+  | 'stack'
+  | 'charge'
+  | 'partyheal'
+  | '3shot'
+  | 'quickpunch'
+  | 'rspeed'
+  | 'taunt'
+  | 'stomp'
+  | 'stop'
+  | 'shadowstrike'
+  | 'pure_eval'
+  | 'cburst'
+  | 'hardshell'
+  | 'use_mp'
+  | 'burst'
+  | 'toggle_inventory'
+  | 'toggle_stats'
+  | 'agitate'
+  | 'poisonarrow'
+  | 'warcry'
+  | 'mcourage'
+  | 'use_hp'
+  | 'curse'
+  | 'toggle_character'
+  | 'travel'
+  | '5shot'
+  | 'move_down'
+  | 'esc'
+  | 'toggle_run_code'
+  | 'attack'
+  | 'heal'
+  | 'track'
+  | 'absorb'
+  | 'toggle_code'
+  | 'open_snippet'
+  | 'throw'
+  | 'invis'
+  | 'cleave'
+  | 'energize'
+  | 'light'
+  | 'snippet'
+  | '4fingers'
+  | 'quickstab'
+  | 'magiport'
+  | 'pcoat'
+  | 'scare';

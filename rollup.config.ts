@@ -2,57 +2,59 @@ import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 //requiring path and fs modules
-import * as path from 'node:path'
-import * as fs from 'node:fs/promises'
+import * as path from 'node:path';
+import * as fs from 'node:fs/promises';
 import alUploader from './rollup-plugin-al-uploader';
 
 interface SaveSlot {
   name?: string;
   slot?: number;
-  message?: string
+  message?: string;
 }
 
 interface SaveMap {
-  [fileName: string]: SaveSlot
+  [fileName: string]: SaveSlot;
 }
 
-//joining path of directory 
+//joining path of directory
 const directoryPath = path.join(__dirname, 'src/uploads');
 
-
 async function getUploadFiles() {
-  const saveMap: SaveMap = {}
+  const saveMap: SaveMap = {};
   try {
     // Get a list of files in the uploads directory //
-    const files = await fs.readdir(directoryPath)
+    const files = await fs.readdir(directoryPath);
 
     // Files should be saved in the format [saveName].[saveSlot].js //
     files.forEach((file, index) => {
-      const fileOptions = file.split('.')
+      const fileOptions = file.split('.');
       let saveName;
       let saveSlot;
-      if (fileOptions.length === 3){
+      if (fileOptions.length === 3) {
         // Destructure name and slot from split string //
-        [saveName, saveSlot, ] = fileOptions
+        [saveName, saveSlot] = fileOptions;
         // Convert saveSlot to Number //
-        saveSlot = Number(saveSlot)
-        saveMap[`./src/uploads/${file}`] = {name: saveName, slot: saveSlot}
+        saveSlot = Number(saveSlot);
+        saveMap[`./src/uploads/${file}`] = { name: saveName, slot: saveSlot };
       } else {
-        saveMap[`./src/uploads/${file}`] = {message: 'Please save your files in the format: [saveName].[saveSlot].ts'};
+        saveMap[`./src/uploads/${file}`] = {
+          message:
+            'Please save your files in the format: [saveName].[saveSlot].ts',
+        };
       }
-    })
-  } catch(err){
-    console.error(err)
+    });
+  } catch (err) {
+    console.error(err);
   } finally {
-    return saveMap
+    return saveMap;
   }
 }
 
 // Need to return a separate config for each file //
-  // This way the files are not code split //
+// This way the files are not code split //
 export default (async () => {
-  const saveMap = await getUploadFiles()
-  const configs = []
+  const saveMap = await getUploadFiles();
+  const configs = [];
   for (const save in saveMap) {
     if (!saveMap[save].message) {
       configs.push({
@@ -61,17 +63,12 @@ export default (async () => {
           format: 'cjs',
           file: `build/${saveMap[save].name}.js`,
         },
-        plugins: [
-          typescript(),
-          resolve(),
-          commonjs(),
-          alUploader()
-        ],
-      })
+        plugins: [typescript(), resolve(), commonjs(), alUploader()],
+      });
     } else {
-      console.error(saveMap[save].message) 
-      console.error('Skipping: ' + save)
+      console.error(saveMap[save].message);
+      console.error('Skipping: ' + save);
     }
   }
-  return configs
-})()
+  return configs;
+})();

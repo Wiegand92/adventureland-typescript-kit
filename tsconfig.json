@@ -1,7 +1,7 @@
 {
-  "compilerOptions": {   
+  "compilerOptions": {
     "target": "es5",
-    "module": "ESNext" ,
+    "module": "ESNext",
     "moduleResolution": "node",
     "lib": ["esnext", "dom"],
     "allowSyntheticDefaultImports": true,
@@ -14,7 +14,7 @@
     "alwaysStrict": true,
     "esModuleInterop": true,
     "downlevelIteration": true,
-    "baseUrl": "./src",
+    "baseUrl": "./src"
   },
-  "include": ["src/**/*", "rollup.config.ts"],
+  "include": ["src/**/*", "rollup.config.ts"]
 }

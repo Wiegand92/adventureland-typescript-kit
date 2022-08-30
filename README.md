@@ -1,4 +1,4 @@
-# Adventure Land Typescript Kit 
+# Adventure Land Typescript Kit
 
 ## About
 
@@ -15,8 +15,8 @@ This is a starter kit to use typescript for [Adventure Land](https://adventure.l
 
 - Clone this repository
 - Create a .env file with cookie
-- Open a terminal in the cloned repository and run 
-```npm install```
+- Open a terminal in the cloned repository and run
+  `npm install`
 - create a .env file in the root directory
   - Go to adventure.land in your browser and login
   - Open your browser dev tools
@@ -26,5 +26,5 @@ This is a starter kit to use typescript for [Adventure Land](https://adventure.l
   ```
     AUTH_COOKIE=YOUR_COOKIE_HERE
   ```
-- When ready to run your dev environment run ```npm run dev``` in a console pointing to the root directory
+- When ready to run your dev environment run `npm run dev` in a console pointing to the root directory
 - Code will only be uploaded to the adventure.land servers if the file is in the src/uploads directory AND is named in the format [saveName].[saveSlot].ts (without the [ ])
