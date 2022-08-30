@@ -14,7 +14,6 @@ This is a starter kit to use typescript for [Adventure Land](https://adventure.l
 ## Getting Started
 
 - Clone this repository
-- Create a .env file with cookie
 - Open a terminal in the cloned repository and run
   `npm install`
 - create a .env file in the root directory
@@ -28,3 +27,10 @@ This is a starter kit to use typescript for [Adventure Land](https://adventure.l
   ```
 - When ready to run your dev environment run `npm run dev` in a console pointing to the root directory
 - Code will only be uploaded to the adventure.land servers if the file is in the src/uploads directory AND is named in the format [saveName].[saveSlot].ts (without the [ ])
+
+## Todo
+
+- [ ] Remove all any types
+- [ ] Add functionality to opt out of fileName based uploads
+- [ ] Update definitions from [adventureland-typescript-starter](https://github.com/saevarb/adventureland-typescript-starter)
+- [ ] Probably a bunch of bugs
