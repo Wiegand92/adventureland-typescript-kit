@@ -26,11 +26,15 @@ This is a starter kit to use typescript for [Adventure Land](https://adventure.l
     AUTH_COOKIE=YOUR_COOKIE_HERE
   ```
 - When ready to run your dev environment run `npm run dev` in a console pointing to the root directory
+
+### Gotchas
+
 - Code will only be uploaded to the adventure.land servers if the file is in the src/uploads directory AND is named in the format [saveName].[saveSlot].ts (without the [ ])
+- The compiler will not upload code until a file has been saved after running `npm run dev`
 
 ## Todo
 
-- [ ] Remove all any types
+- [ ] Remove all any types in config and watcher
 - [ ] Add functionality to opt out of fileName based uploads
-- [ ] Update definitions from [adventureland-typescript-starter](https://github.com/saevarb/adventureland-typescript-starter)
+- [x] Switched to types from [BegLand](https://github.com/BegLand/types-adventureland/blob/master/index.d.ts) ~~Update definitions from [adventureland-typescript-starter](https://github.com/saevarb/adventureland-typescript-starter)~~
 - [ ] Probably a bunch of bugs
