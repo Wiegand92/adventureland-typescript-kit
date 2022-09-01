@@ -17,6 +17,7 @@
   "author": "Alex Wiegand",
   "license": "MIT",
   "devDependencies": {
+    "@begland/types-adventureland": "^0.0.4",
     "@rollup/plugin-commonjs": "22.0.2",
     "@rollup/plugin-node-resolve": "13.3.0",
     "@rollup/plugin-typescript": "8.3.4",

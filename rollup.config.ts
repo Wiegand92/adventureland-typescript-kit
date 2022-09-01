@@ -63,6 +63,7 @@ export default (async () => {
           format: 'cjs',
           file: `build/${saveMap[save].name}.js`,
         },
+        treeshake: false,
         plugins: [typescript(), resolve(), commonjs(), alUploader()],
       });
     } else {
